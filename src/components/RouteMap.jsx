@@ -28,8 +28,15 @@ const RouteMap = ({ routes, onRouteClick }) => {
   // Convert string coordinates to array of [lat, lng]
   const parseMapPath = (mapPathString) => {
     try {
-      // Parse the string to get the array
+      // Guard: Empty or invalid input
+      if (!mapPathString || mapPathString.trim() === '') return [];
+
+      // Try parsing
       const coordinates = JSON.parse(mapPathString);
+
+      // Optional: Validate format
+      if (!Array.isArray(coordinates)) return [];
+
       return coordinates;
     } catch (error) {
       console.error("Error parsing map path:", error);
